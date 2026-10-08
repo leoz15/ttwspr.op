@@ -44,8 +44,8 @@ h1{font-family:var(--serif);font-weight:800;font-size:clamp(3.8rem,15vw,10rem);l
 .year:nth-child(even) .lbl{text-align:right}
 .photos{display:grid;grid-template-columns:repeat(12,1fr);gap:0 16px}
 .ph{position:relative;aspect-ratio:var(--ar,4/5);background:linear-gradient(150deg,hsl(var(--h) 18% 84%),hsl(calc(var(--h) + 25) 14% 74%));border:0;padding:0;width:100%;cursor:zoom-in;display:flex;align-items:center;justify-content:center;color:var(--mute);font:.8rem var(--sans);letter-spacing:.14em;box-shadow:0 30px 50px -34px rgba(74,59,50,.6);overflow:hidden}
-.ph img{width:100%;height:100%;object-fit:cover;display:block;filter:sepia(.14) saturate(.92) contrast(.95) brightness(1.02)}
-.ph::after{content:"";position:absolute;inset:0;opacity:.14;mix-blend-mode:multiply;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.ph img,.ph video{width:100%;height:100%;object-fit:cover;display:block;filter:sepia(.14) saturate(.92) contrast(.95) brightness(1.02)}
+.ph::after{content:"";position:absolute;inset:0;opacity:.14;mix-blend-mode:multiply;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25'/%3E%3C/svg%3E")}
 .pw{will-change:transform}
 .pol .ph{border:0}
 .pw.pol{background:#FFFFFF;padding:10px 10px 38px;box-shadow:0 30px 50px -30px rgba(74,59,50,.65)}
@@ -80,7 +80,8 @@ body.dk #ui{color:var(--dkink)}body.dk #ind{color:var(--dkink)}
 .dark .lbl{color:#CDB3BB}
 #rev h2{font-family:var(--serif);font-weight:800;font-size:clamp(9rem,42vw,26rem);line-height:.8;letter-spacing:-.05em}
 #rev .big{font-family:var(--serif);font-size:clamp(1.4rem,5vw,2.6rem);letter-spacing:.4em;margin-top:24px}
-#rev .ph{width:min(560px,86vw);--ar:3/2;margin-top:64px;opacity:0;transform:scale(.93);transition:opacity 4s ease,transform 5s ease}
+#rev .ph{width:min(600px,90vw);height:auto;aspect-ratio:auto;margin-top:64px;opacity:0;transform:scale(.93);transition:opacity 4s ease,transform 5s ease}
+#rev .ph img{height:auto;object-fit:contain}
 #rev .ph.in{opacity:1;transform:none}
 #letter{align-items:center}
 #letter .body{max-width:30em;text-align:left;font-family:var(--th);font-size:1.05rem;line-height:2.4;white-space:pre-line;margin-top:34px}
@@ -100,7 +101,7 @@ body.dk #ui{color:var(--dkink)}body.dk #ind{color:var(--dkink)}
 #fin .q{margin:90px auto 0;max-width:22em;font-family:var(--serif);font-style:italic;font-size:1.5rem;line-height:1.6;opacity:0;transition:opacity 4s;color:#E0C6CE}
 /* lightbox + cursor */
 #lb{position:fixed;inset:0;background:rgba(20,15,12,.94);display:none;align-items:center;justify-content:center;z-index:95;padding:24px;cursor:zoom-out}
-#lb.on{display:flex}#lb .ph{max-width:min(92vw,680px);max-height:84vh;width:auto;height:84vh;cursor:zoom-out}#lb .ph img{object-fit:contain}
+#lb.on{display:flex}#lb .ph{max-width:min(92vw,680px);max-height:84vh;width:auto;height:84vh;cursor:zoom-out}#lb .ph img,#lb .ph video{object-fit:contain}
 #cur{position:fixed;left:0;top:0;width:10px;height:10px;margin:-5px;border-radius:50%;background:var(--rose);pointer-events:none;z-index:99;opacity:0;transition:width .4s,height .4s,margin .4s,opacity .4s;mix-blend-mode:multiply}
 #cur.h{width:54px;height:54px;margin:-27px;opacity:.35}
 @media (hover:none){#cur{display:none}}
@@ -184,61 +185,61 @@ body.dk #ui{color:var(--dkink)}body.dk #ind{color:var(--dkink)}
 const HEART='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 800"%3E%3Cdefs%3E%3ClinearGradient id="bg" x2="1" y2="1"%3E%3Cstop stop-color="%23fff1f3"/%3E%3Cstop offset="1" stop-color="%23e9b7c3"/%3E%3C/linearGradient%3E%3ClinearGradient id="heart" x2="0" y2="1"%3E%3Cstop stop-color="%23e98ca2"/%3E%3Cstop offset="1" stop-color="%23c95f7d"/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="640" height="800" fill="url(%23bg)"/%3E%3Ccircle cx="320" cy="400" r="230" fill="none" stroke="%23ffffff" stroke-opacity=".55" stroke-width="2"/%3E%3Cpath d="M320 555 154 392C54 293 206 167 320 279 434 167 586 293 486 392Z" fill="url(%23heart)"/%3E%3C/svg%3E';
 const Y=[
 ["2016","THE BEGINNING",3,[
-  "รูป/Test.jpg",
-  "รูป/Test2.jpg",
-  "รูป/test4.png"
+  "image/2016.jpg",
+  "image/2016.2.jpg",
+  "image/video/2016.1.mp4"
 ],[2],"ปีแรกที่เรื่องราวของเราเริ่มขึ้น\nจากคนสองคนที่ยังไม่รู้เลยว่า\nจะเดินทางมาด้วยกันไกลแค่ไหน"],
 ["2017","GETTING TO KNOW YOU",3,[
-  "รูป/test3.jpg",
-  "รูป/test4.png",
-  "รูป/test5.jpg"
+  "image/video/2016.2.mp4",
+  "image/2017.1.jpg",
+  "image/2017.jpg",
 ],[3],"จากวันแรกที่รู้จัก\nกลายเป็นวันที่เราเริ่มมีเรื่องราวร่วมกันมากขึ้น"],
 ["2018","MORE MEMORIES",3,[
-  "รูป/test200.jpg",
-  "รูป/test01.jpg",
-  "รูป/cat01.jpg"
+  "image/2018.jpg",
+  "image/video/2016.3.jpg",
+  "image/video/2017.2.mp4"
 ],[2],"มีทั้งวันที่หัวเราะ วันที่งอนกัน\nและวันที่เรายังเลือกที่จะอยู่ข้างกัน..ยังให้โอกาสกันและกัน\nขอบคุณนะ"],
 ["2019","GROWING TOGETHER",3,[
-  "รูป/304861.jpg",
-  "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80"
+  "image/video/2019.2.mp4",
+  "image/video/2019.1.jpg",
+  "image/video/2019.mp4"
 ],[3],"ต่างคนต่างมีเรื่องให้เรียนรู้\nตั้งแต่สมัยเรียน ม.ปลาย จนเข้ามหาลัย\nแต่เรามีกันและกันเป็นที่พักใจให้เสมอ"],
 ["2020","THE QUIET YEAR",2,[
-  "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1474552226712-ac0f0961a954?auto=format&fit=crop&w=800&q=80"
+  "image/2021.2.jpg",
+  "image/2021.jpg"
 ],[2],"เข้ามหาลัยคนละที่ ถึงจะไกลกันแค่ไหน\nแต่เราก็พยายามมี เค้าไปหาเธอบ้าง เธอมาหาเค้าบ้าง\nทำให้ความห่างไกลไม่เป็นปัญหาเลย\nคิดถึงมาก ๆ น้าาาา"],
 ["2021","SMALL THINGS",3,[
-  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1501901609772-df0848060b33?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80"
+  "image/2021.1.jpg",
+  "image/video/2021.1.mov",
+  "image/2022.1.jpg"
 ],[1,3],"วันธรรมดาที่มีพิมอยู่ด้วย\nมันคือวันที่พิเศษสำหรับเค้านะ\nมีเธอมันสบายใจ…ถึงจะตีกันบ้างก็เหอะ"],
 ["2022","WHERE WE WENT",3,[
-  "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=800&q=80"
+  "image/video/2021.2.mov",
+  "image/2022.3.jpg",
+  "image/video/2022.1.mov"
 ],[3],"ทุกที่ที่ไป ไม่สำคัญเท่ากับว่า\nเราไปด้วยกัน (คำนี้ชอบ เอามาจาก GPT 555)\nแต่ตรงใจนะ จุ้บบ"],
 ["2023","ORDINARY DAYS",3,[
-  "https://images.unsplash.com/photo-1516726817505-f5ed825624d8?auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80"
+  "image/2024.jpg",
+  "image/video/2023.7.mp4",
+  "image/2022.2.jpg"
 ],[2],"ไม่ต้องมีอะไรมากมาย\nแค่ได้นั่งข้างกัน ก็เพียงพอแล้ว\nไว้สร้างไปด้วยกันน้าาาา"],
 ["2024","UNDERSTANDING",3,[
-  "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1516575334481-f85287c2c82d?auto=format&fit=crop&w=800&q=80"
+  "image/2024.3.jpg",
+  "image/2025.1.jpg",
+  "image/2024.4.jpg"
 ],[3],"เรารู้จักฟังกันมากขึ้น\nและรักกันแบบที่เป็นตัวเองมากขึ้น"],
 ["2025","ALMOST TEN",3,[
-  "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?auto=format&fit=crop&w=800&q=80"
+  "image/video/2025.1.mov",
+  "image/video/2025.mp4",
+  "image/video/2025.2.jpg"
 ],[2],"อีกนิดเดียว\nเราก็จะครบ 10 ปีด้วยกันแล้ว"],
 ["2026","TEN YEARS",3,[
-  "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1000&q=80",
-  "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80"
+  "image/2026.1.jpg",
+  "image/2026.2.jpg",
+  "image/2026.3.jpg"
 ],[1],"และวันนี้ เรายังอยู่ตรงนี้\nด้วยกัน"]
 ];
-const NOW="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80";         // รูปคู่ปัจจุบัน (ตอนเปิดเผย 10 ปี)
+const NOW="image/2026.jpg";         // รูปคู่ปัจจุบัน (ตอนเปิดเผย 10 ปี)
 const SCATTER=[
   "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?auto=format&fit=crop&w=800&q=80",
@@ -251,11 +252,24 @@ const SCATTER=[
 ]; // รูปที่ลอยเข้ามาตอนจบ
 /* ============================ */
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-function ph(src,label,h,ar){const b=document.createElement('button');b.type='button';b.className='ph';b.style.setProperty('--h',h);if(ar)b.style.setProperty('--ar',ar);b.setAttribute('aria-label','ดูรูปใหญ่: '+label);
- if(src){const i=new Image();i.src=src;i.alt=label;b.appendChild(i)}else b.textContent=label.toUpperCase();
- b.onclick=()=>{const l=$('#lb'),c=b.cloneNode(true);c.style.setProperty('--ar','4/5');l.innerHTML='';l.appendChild(c);l.classList.add('on')};return b}
+const videoObserver=new IntersectionObserver(entries=>entries.forEach(({target,isIntersecting})=>{
+ if(isIntersecting){target.play().catch(()=>{target.controls=true;target.title='แตะเพื่อเล่นวิดีโอ'})}
+ else target.pause();
+}),{threshold:.25});
+function ph(src,label,h,ar){const isVideo=!!src&&/\.(mp4|webm|ogg|mov|m4v)(?:[?#]|$)/i.test(src),b=document.createElement(isVideo?'div':'button');if(!isVideo)b.type='button';b.className='ph';b.style.setProperty('--h',h);if(ar)b.style.setProperty('--ar',ar);b.setAttribute('aria-label','ดูสื่อขนาดใหญ่: '+label);
+ if(isVideo){b.setAttribute('role','button');b.tabIndex=0}
+ if(src){const media=document.createElement(isVideo?'video':'img');media.src=src;
+  if(isVideo){media.muted=true;media.defaultMuted=true;media.autoplay=true;media.loop=true;media.playsInline=true;media.controls=true;media.preload='auto';videoObserver.observe(media)}
+  else media.alt=label;
+  b.appendChild(media)}else b.textContent=label.toUpperCase();
+ const open=()=>{const l=$('#lb'),c=b.cloneNode(true),video=c.querySelector('video');c.style.setProperty('--ar','4/5');
+  if(video){video.controls=true;video.autoplay=false;video.loop=false;video.muted=false}
+  l.innerHTML='';l.appendChild(c);l.classList.add('on')};
+ b.onclick=e=>{if(!isVideo||e.target!==media)open()};
+ if(isVideo)b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}};
+ return b}
 function wrap(p,pol,cls){const w=document.createElement('div');w.className='pw rv '+cls+(pol?' pol':'');w.appendChild(p);w.dataset.par=(Math.random()*.06+.03)*(Math.random()<.5?-1:1);return w}
-$('#lb').onclick=()=>$('#lb').classList.remove('on');
+$('#lb').onclick=e=>{if(!e.target.closest('video'))$('#lb').classList.remove('on')};
 addEventListener('keydown',e=>{if(e.key==='Escape')$('#lb').classList.remove('on')});
 
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.2});
