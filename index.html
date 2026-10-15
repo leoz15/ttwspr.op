@@ -16,10 +16,13 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opa
 h1{font-family:var(--serif);font-weight:800;font-size:clamp(3.8rem,15vw,10rem);line-height:.96;letter-spacing:-.035em;margin:28px 0 22px}
 .it{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.3rem;color:var(--mute)}
 #hero::before{content:'';position:absolute;inset:32px 0 0 26px;border:1px solid var(--sand);border-right:0;border-bottom:0;pointer-events:none}
-.dc{position:absolute;color:var(--taupe);opacity:.6;font-family:var(--serif);pointer-events:none;animation:dr 9s ease-in-out infinite alternate}
-@keyframes dr{to{transform:translateY(-14px)}}
-.btn{margin-top:38px;font:inherit;font-size:.95rem;letter-spacing:.06em;color:var(--ink);background:transparent;border:1px solid var(--ink);padding:15px 34px;cursor:pointer;transition:background .5s,color .5s}
-.btn:hover,.btn:focus-visible{background:var(--ink);color:var(--bg);outline:none}
+.dc{position:absolute;color:var(--rose);opacity:.8;font-family:var(--serif);pointer-events:none;will-change:transform;filter:drop-shadow(0 8px 16px rgba(217,140,160,.22))}
+.dc.ten{left:12%;top:22%;font-size:clamp(3rem,7vw,5.2rem);animation:ten-float 5.4s ease-in-out infinite}
+.dc.heart{right:10%;top:34%;font-size:clamp(2.8rem,6vw,4.4rem);animation:heart-dance 4.2s ease-in-out infinite;animation-delay:.7s}
+@keyframes ten-float{0%,100%{transform:translate3d(0,0,0) rotate(-7deg) scale(1)}30%{transform:translate3d(8px,-20px,0) rotate(5deg) scale(1.12)}65%{transform:translate3d(-5px,-9px,0) rotate(-2deg) scale(.96)}}
+@keyframes heart-dance{0%,100%{transform:translate3d(0,0,0) rotate(-10deg) scale(1)}28%{transform:translate3d(-7px,-13px,0) rotate(14deg) scale(1.2)}52%{transform:translate3d(3px,-4px,0) rotate(-5deg) scale(1.05)}76%{transform:translate3d(-4px,-17px,0) rotate(10deg) scale(1.14)}}
+.btn{margin-top:38px;font:inherit;font-size:.95rem;letter-spacing:.06em;color:var(--ink);background:transparent;border:1px solid var(--ink);border-radius:999px;padding:13px 30px;cursor:pointer;transition:background .35s,color .35s,transform .35s}
+.btn:hover,.btn:focus-visible{background:var(--ink);color:var(--bg);transform:translateY(-2px);outline:none}
 .fade{animation:fin 2.4s ease both}.d1{animation-delay:.4s}.d2{animation-delay:1s}.d3{animation-delay:1.6s}
 @keyframes fin{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 /* card */
@@ -33,7 +36,8 @@ h1{font-family:var(--serif);font-weight:800;font-size:clamp(3.8rem,15vw,10rem);l
 .cover .b{transform:rotateY(180deg);background:var(--paper)}
 .cover .f b{font-family:var(--serif);font-weight:800;font-size:6rem;line-height:1}
 .card.open .cover{transform:rotateY(-112deg);opacity:0}
-.cue{opacity:0;transition:opacity 2s;cursor:pointer;font-family:var(--th);color:var(--mute);background:none;border:0;font-size:.95rem}
+.cue{opacity:0;transition:opacity 2s,background .3s,color .3s;cursor:pointer;font-family:var(--th);color:var(--mute);background:transparent;border:1px solid var(--taupe);border-radius:999px;padding:10px 22px;font-size:.92rem}
+.cue:hover,.cue:focus-visible{background:var(--paper);color:var(--ink);outline:none}
 .cue.on{opacity:1}
 /* years */
 .year{position:relative;max-width:1080px;margin:0 auto;padding:16vh 24px}
@@ -73,10 +77,6 @@ h1{font-family:var(--serif);font-weight:800;font-size:clamp(3.8rem,15vw,10rem);l
 #line i{position:absolute;left:0;top:0;width:1px;height:100%;background:var(--rose);transform-origin:top;transform:scaleY(0)}
 #ind{position:absolute;left:20px;bottom:calc(22px + env(safe-area-inset-bottom,0px));font-family:var(--serif);font-style:italic;font-size:1.7rem;color:var(--ink)}
 #top{position:fixed;left:0;top:0;height:2px;width:100%;background:var(--rose);transform-origin:left;transform:scaleX(0);z-index:70}
-#snd{position:fixed;right:18px;top:calc(16px + env(safe-area-inset-top,0px));z-index:80;background:none;border:1px solid var(--taupe);color:var(--ink);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:.9rem;opacity:.75}
-#snd.on{background:var(--ink);color:var(--bg)}
-.music-credit{margin:52px auto 0;max-width:34em;font: .62rem var(--sans);letter-spacing:.04em;color:#BFAAB1;opacity:.8}
-.music-credit a{color:inherit;text-underline-offset:3px}
 body.dk #ui{color:var(--dkink)}body.dk #ind{color:var(--dkink)}
 /* dark */
 .dark{background:var(--dk);color:var(--dkink)}
@@ -90,8 +90,8 @@ body.dk #ui{color:var(--dkink)}body.dk #ind{color:var(--dkink)}
 #letter .body{max-width:30em;text-align:left;font-family:var(--th);font-size:1.05rem;line-height:2.4;white-space:pre-line;margin-top:34px}
 #letter h3{font-family:var(--serif);font-weight:800;font-size:clamp(3rem,10vw,5.5rem);line-height:1}
 .lb2{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:56px}.note{margin-top:24px;font-family:var(--th);font-size:.85rem;color:#CDB3BB}
-.love{font:inherit;font-family:var(--th);font-size:1.15rem;color:var(--dk);background:var(--dkink);border:0;padding:18px 44px;cursor:pointer;transition:transform .6s,background .6s}
-.love:hover{transform:scale(1.04);background:#fff}
+.love{font:inherit;font-family:var(--th);font-size:1.05rem;color:var(--dk);background:var(--dkink);border:1px solid transparent;border-radius:999px;padding:15px 34px;cursor:pointer;transition:transform .35s,background .35s,border-color .35s}
+.love:hover,.love:focus-visible{transform:translateY(-2px);background:#fff;border-color:#D8C4CB;outline:none}
 #fin{display:none;padding:18vh 24px 22vh;text-align:center}#fin.on{display:block}
 #fin .m{font-family:var(--th);font-size:clamp(1.15rem,3.4vw,1.5rem);line-height:2.3;white-space:pre-line;opacity:0;transition:opacity 3s;max-width:24em;margin:0 auto 90px}
 #fin .m.sm{font-size:clamp(1rem,3vw,1.2rem);margin-bottom:64px}
@@ -114,14 +114,12 @@ body.dk #ui{color:var(--dkink)}body.dk #ind{color:var(--dkink)}
 </head>
 <body>
 <div id="top"></div><div id="cur"></div>
-<button id="snd" aria-label="เปิด/ปิดเสียงเปียโน" aria-pressed="false" title="Our Story — เปียโนบรรเลง">♪</button>
-<audio id="music" src="audio/emotional-love-piano-melody.mp3" preload="none" loop></audio>
 <div id="ui"><div id="line"><i></i></div><div id="ind">2016</div></div>
 
 <section class="scr" id="hero">
-  <p class="lbl fade">TTWSPR · Our Story</p>
+  <p class="lbl fade">TTWSPR · OP</p>
   <h1 class="fade d1">10 Years<br>of Us</h1>
-  <span class="dc" style="left:12%;top:22%;font-size:1.4rem">10</span><span class="dc" style="right:10%;top:34%;font-size:1.1rem;animation-delay:2s">♡</span><p class="it fade d2">10 ปีแล้วนะ…ที่มีพิมอยู่ข้าง ๆ</p>
+  <span class="dc ten" aria-hidden="true">10</span><span class="dc heart" aria-hidden="true">♡</span><p class="it fade d2">10 ปีแล้วนะ…ที่มีพิมอยู่ข้าง ๆ</p>
   <p class="lbl fade d2" style="margin-top:34px;letter-spacing:.5em">2016 — 2026</p>
   <button class="btn fade d3" id="go">เปิดความทรงจำ</button>
 </section>
@@ -192,7 +190,6 @@ body.dk #ui{color:var(--dkink)}body.dk #ind{color:var(--dkink)}
     <p class="big2 m" style="margin-bottom:24px">เคียงข้างไปด้วยกันนะ</p>
     <p class="it m" style="color:#CDB3BB;margin-bottom:0">ดูจบแล้วกอดหน่อยสิ</p>
     <p class="tc lbl">TO BE CONTINUED…</p>
-    <p class="music-credit">เพลงประกอบ: <a href="https://orangefreesounds.com/emotional-love-piano-melody/" target="_blank" rel="noopener">Emotional Love Piano Melody — Alexander</a> · CC BY 4.0</p>
   </section>
 </main>
 <div id="lb"></div>
@@ -271,13 +268,13 @@ const SCATTER=[
 ]; // รูปที่ลอยเข้ามาตอนจบ
 // เติมคำบรรยายใต้ภาพแต่ละใบได้ที่นี่ (เรียงตาม SCATTER; เว้น "" ถ้าไม่ต้องการแสดง)
 const SCATTER_CAPTIONS=[
-  "หาสมต้มกินกัน><", // ภาพที่ 1
-  "เย้..ได้ขี่ช้างด้วย", // ภาพที่ 2
+  "หาส้มตำกินกัน><", // ภาพที่ 1
+  "เย้...ได้ขี่ช้างด้วย", // ภาพที่ 2
   "ว่าไงจ๊ะแม่สาวอีซี่", // ภาพที่ 3
-  "ชอบภาพนี้น่ะ..ดูอบอุ่น", // ภาพที่ 4
-  "อยุ่อยุธยา..อยุ่กับเด็ก..แต่ก็สนุกดีนะ", // ภาพที่ 5
+  "คิดถึงจัง", // ภาพที่ 4
+  "อยู่อยุธยา..อยุ่กับเด็ก..แต่ก็สนุกดีนะ", // ภาพที่ 5
   "สาวผมสั้นน่ารักนะ", // ภาพที่ 6
-  "ดูเกรงๆนะ><", // ภาพที่ 7
+  "10/10/2026", // ภาพที่ 7
   "TTWSPR — ชื่อที่มีความหมายสำหรับเรา"  // ภาพที่ 8
 ];
 /* ============================ */
@@ -351,19 +348,6 @@ $$('.love').forEach(b=>b.onclick=()=>{$('#lovebox').style.display='none';const f
  $$('#sc .pw').forEach((w,i)=>{const t=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){setTimeout(()=>w.classList.add('in'),i*180);t.disconnect()}}),{threshold:.3});t.observe(w)});
  [...ms].slice(1).concat($$('#fin .tc,#fin .q')).forEach(el=>{const t=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){el.classList.add('in');t.disconnect()}}),{threshold:.5});t.observe(el)});
 });
-
-// Fade the selected piano piece gently after the visitor taps the sound button.
-const music=$('#music'),snd=$('#snd');let musicOn=false,fadeTimer=null;
-music.volume=0;
-snd.onclick=async()=>{
- if(fadeTimer){clearInterval(fadeTimer);fadeTimer=null}
- if(!musicOn){
-  try{await music.play();musicOn=true;snd.classList.add('on');snd.setAttribute('aria-pressed','true')}
-  catch{snd.title='ไม่สามารถเล่นเพลงได้ในขณะนี้';return}
- }else{musicOn=false;snd.classList.remove('on');snd.setAttribute('aria-pressed','false')}
- const target=musicOn?.24:0,steps=12,step=(target-music.volume)/steps;let n=0;
- fadeTimer=setInterval(()=>{music.volume=Math.max(0,Math.min(1,music.volume+step));if(++n>=steps){clearInterval(fadeTimer);fadeTimer=null;if(!musicOn)music.pause()}},70);
-};
 
 // cursor
 if(matchMedia('(hover:hover)').matches){const c=$('#cur');let x=0,y=0,cx=0,cy=0;
