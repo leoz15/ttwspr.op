@@ -37,6 +37,8 @@ h1{font-family:var(--serif);font-weight:800;font-size:clamp(3.8rem,15vw,10rem);l
 .cue.on{opacity:1}
 /* years */
 .year{position:relative;max-width:1080px;margin:0 auto;padding:16vh 24px}
+.year:not(:last-child)::after{content:"";position:absolute;left:50%;bottom:3vh;width:1px;height:54px;background:linear-gradient(var(--sand),var(--rose));opacity:.75}
+.year:not(:last-child)::before{content:"♡";position:absolute;left:50%;bottom:calc(3vh + 50px);transform:translate(-50%,-50%);color:var(--rose);font:1rem var(--serif);background:var(--bg);padding:0 8px;z-index:1}
 .yr{font-family:var(--serif);font-weight:800;font-size:clamp(5rem,20vw,12rem);line-height:.85;letter-spacing:-.04em;color:var(--rose)}
 .year:nth-child(even) .yr{text-align:right}
 .year .lbl{margin:22px 0 46px;color:var(--rose)}
@@ -73,6 +75,8 @@ h1{font-family:var(--serif);font-weight:800;font-size:clamp(3.8rem,15vw,10rem);l
 #top{position:fixed;left:0;top:0;height:2px;width:100%;background:var(--rose);transform-origin:left;transform:scaleX(0);z-index:70}
 #snd{position:fixed;right:18px;top:calc(16px + env(safe-area-inset-top,0px));z-index:80;background:none;border:1px solid var(--taupe);color:var(--ink);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:.9rem;opacity:.75}
 #snd.on{background:var(--ink);color:var(--bg)}
+.music-credit{margin:52px auto 0;max-width:34em;font: .62rem var(--sans);letter-spacing:.04em;color:#BFAAB1;opacity:.8}
+.music-credit a{color:inherit;text-underline-offset:3px}
 body.dk #ui{color:var(--dkink)}body.dk #ind{color:var(--dkink)}
 /* dark */
 .dark{background:var(--dk);color:var(--dkink)}
@@ -95,6 +99,7 @@ body.dk #ui{color:var(--dkink)}body.dk #ind{color:var(--dkink)}
 .scatter{display:flex;flex-direction:column;align-items:center;gap:120px;margin:40px auto 130px}.scatter .pw{width:min(340px,78vw);position:relative;padding-bottom:54px}.cap{position:absolute;left:0;right:0;bottom:18px;text-align:center;font:.6rem var(--sans);letter-spacing:.18em;color:#7A6A70}
 .scatter .pw{grid-row:auto;opacity:0;transform:translate(var(--x),120px) rotate(var(--r));transition:opacity 2.4s ease,transform 3s cubic-bezier(.2,.8,.2,1)}
 .scatter .pw.in{opacity:1;transform:translate(0,var(--y)) rotate(var(--r))}
+.scatter .cap:empty{display:none}
 #fin .big2{font-family:var(--serif);font-weight:800;font-size:clamp(2.2rem,7vw,4.4rem);line-height:1.2}
 #fin .tc{margin-top:70px;letter-spacing:.4em;font-size:.8rem;opacity:0;transition:opacity 3s}
 #fin .q{margin:90px auto 0;max-width:22em;font-family:var(--serif);font-style:italic;font-size:1.5rem;line-height:1.6;opacity:0;transition:opacity 4s;color:#E0C6CE}
@@ -109,7 +114,8 @@ body.dk #ui{color:var(--dkink)}body.dk #ind{color:var(--dkink)}
 </head>
 <body>
 <div id="top"></div><div id="cur"></div>
-<button id="snd" aria-label="เปิด/ปิดเสียงดนตรี" title="ดนตรีบรรยากาศ">♪</button>
+<button id="snd" aria-label="เปิด/ปิดเสียงเปียโน" aria-pressed="false" title="Our Story — เปียโนบรรเลง">♪</button>
+<audio id="music" src="audio/emotional-love-piano-melody.mp3" preload="none" loop></audio>
 <div id="ui"><div id="line"><i></i></div><div id="ind">2016</div></div>
 
 <section class="scr" id="hero">
@@ -186,6 +192,7 @@ body.dk #ui{color:var(--dkink)}body.dk #ind{color:var(--dkink)}
     <p class="big2 m" style="margin-bottom:24px">เคียงข้างไปด้วยกันนะ</p>
     <p class="it m" style="color:#CDB3BB;margin-bottom:0">ดูจบแล้วกอดหน่อยสิ</p>
     <p class="tc lbl">TO BE CONTINUED…</p>
+    <p class="music-credit">เพลงประกอบ: <a href="https://orangefreesounds.com/emotional-love-piano-melody/" target="_blank" rel="noopener">Emotional Love Piano Melody — Alexander</a> · CC BY 4.0</p>
   </section>
 </main>
 <div id="lb"></div>
@@ -262,6 +269,17 @@ const SCATTER=[
   "รูป/2026.6.jpg",
   "รูป/2026.11.jpg"
 ]; // รูปที่ลอยเข้ามาตอนจบ
+// เติมคำบรรยายใต้ภาพแต่ละใบได้ที่นี่ (เรียงตาม SCATTER; เว้น "" ถ้าไม่ต้องการแสดง)
+const SCATTER_CAPTIONS=[
+  "หาสมต้มกินกัน><", // ภาพที่ 1
+  "เย้..ได้ขี่ช้างด้วย", // ภาพที่ 2
+  "ว่าไงจ๊ะแม่สาวอีซี่", // ภาพที่ 3
+  "ชอบภาพนี้น่ะ..ดูอบอุ่น", // ภาพที่ 4
+  "อยุ่อยุธยา..อยุ่กับเด็ก..แต่ก็สนุกดีนะ", // ภาพที่ 5
+  "สาวผมสั้นน่ารักนะ", // ภาพที่ 6
+  "ดูเกรงๆนะ><", // ภาพที่ 7
+  "TTWSPR — ชื่อที่มีความหมายสำหรับเรา"  // ภาพที่ 8
+];
 /* ============================ */
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const videoObserver=new IntersectionObserver(entries=>entries.forEach(({target,isIntersecting})=>{
@@ -326,20 +344,26 @@ $('#cue').onclick=()=>{$('#story').classList.add('on');$('#ui').classList.add('o
 $$('.love').forEach(b=>b.onclick=()=>{$('#lovebox').style.display='none';const f=$('#fin');f.classList.add('on');
  setTimeout(()=>f.scrollIntoView({behavior:'smooth'}),100);
  const ms=$$('#fin .m'),sc=$('#sc');
- for(let i=0;i<8;i++){const w=wrap(ph(SCATTER[i],'Memory '+(i+1),(i*53)%360,'4/5'),true,'');{const c=document.createElement('div');c.className='cap';c.textContent='TTWSPR — ชื่อที่มีความหมายสำหรับเรา';w.appendChild(c)}w.dataset.par=0;w.classList.remove('rv');
+ for(let i=0;i<8;i++){const w=wrap(ph(SCATTER[i],'Memory '+(i+1),(i*53)%360,'4/5'),true,'');{const c=document.createElement('div');c.className='cap';c.textContent=SCATTER_CAPTIONS[i]||'';w.appendChild(c)}w.dataset.par=0;w.classList.remove('rv');
   w.style.setProperty('--r',((i%2?1:-1)*(1+i%3*1.6))+'deg');w.style.setProperty('--x','0px');w.style.setProperty('--y','0px');sc.appendChild(w)}
  const steps=[[$('#fin .m'),900]];
  setTimeout(()=>ms[0].classList.add('in'),1400);
- $$('#sc .pw').forEach((w,i)=>{const t=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){setTimeout(()=>w.classList.add('in'),(i%3)*600);t.disconnect()}}),{threshold:.3});t.observe(w)});
+ $$('#sc .pw').forEach((w,i)=>{const t=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){setTimeout(()=>w.classList.add('in'),i*180);t.disconnect()}}),{threshold:.3});t.observe(w)});
  [...ms].slice(1).concat($$('#fin .tc,#fin .q')).forEach(el=>{const t=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){el.classList.add('in');t.disconnect()}}),{threshold:.5});t.observe(el)});
 });
 
-// ambient sound (generated, no file needed)
-let ac,on=false,g;
-$('#snd').onclick=()=>{
- if(!ac){ac=new (window.AudioContext||window.webkitAudioContext)();g=ac.createGain();g.gain.value=0;g.connect(ac.destination);
-  [110,164.8,220,277.2,329.6].forEach((f,i)=>{const o=ac.createOscillator(),v=ac.createGain(),l=ac.createOscillator(),lg=ac.createGain();o.type='sine';o.frequency.value=f;v.gain.value=.05/(1+i*.4);l.frequency.value=.06+i*.03;lg.gain.value=.03;l.connect(lg);lg.connect(v.gain);o.connect(v);v.connect(g);o.start();l.start()})}
- on=!on;ac.resume();g.gain.cancelScheduledValues(ac.currentTime);g.gain.linearRampToValueAtTime(on?.6:0,ac.currentTime+2);$('#snd').classList.toggle('on',on)};
+// Fade the selected piano piece gently after the visitor taps the sound button.
+const music=$('#music'),snd=$('#snd');let musicOn=false,fadeTimer=null;
+music.volume=0;
+snd.onclick=async()=>{
+ if(fadeTimer){clearInterval(fadeTimer);fadeTimer=null}
+ if(!musicOn){
+  try{await music.play();musicOn=true;snd.classList.add('on');snd.setAttribute('aria-pressed','true')}
+  catch{snd.title='ไม่สามารถเล่นเพลงได้ในขณะนี้';return}
+ }else{musicOn=false;snd.classList.remove('on');snd.setAttribute('aria-pressed','false')}
+ const target=musicOn?.24:0,steps=12,step=(target-music.volume)/steps;let n=0;
+ fadeTimer=setInterval(()=>{music.volume=Math.max(0,Math.min(1,music.volume+step));if(++n>=steps){clearInterval(fadeTimer);fadeTimer=null;if(!musicOn)music.pause()}},70);
+};
 
 // cursor
 if(matchMedia('(hover:hover)').matches){const c=$('#cur');let x=0,y=0,cx=0,cy=0;
