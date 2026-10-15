@@ -115,6 +115,7 @@ body.dk #ui{color:var(--dkink)}body.dk #ind{color:var(--dkink)}
 <body>
 <div id="top"></div><div id="cur"></div>
 <div id="ui"><div id="line"><i></i></div><div id="ind">2016</div></div>
+<audio id="bgMusic" src="audio/anniversary-piano.mp3" loop preload="auto"></audio>
 
 <section class="scr" id="hero">
   <p class="lbl fade">TTWSPR · OP</p>
@@ -332,7 +333,7 @@ function onScroll(){if(tick)return;tick=true;requestAnimationFrame(()=>{
 addEventListener('scroll',onScroll,{passive:true});
 
 // flow
-$('#go').onclick=()=>{$('#cardS').classList.add('on');$('#cardS').scrollIntoView({behavior:'smooth'});
+$('#go').onclick=()=>{const music=$('#bgMusic');music.volume=.5;music.play().catch(()=>{});$('#cardS').classList.add('on');$('#cardS').scrollIntoView({behavior:'smooth'});
  setTimeout(()=>$('#card').classList.add('open'),900);setTimeout(()=>$('#cue').classList.add('on'),3800)};
 $('#card').onclick=()=>$('#card').classList.add('open');
 $('#cue').onclick=()=>{$('#story').classList.add('on');$('#ui').classList.add('on');setTimeout(()=>$('#years').scrollIntoView({behavior:'smooth'}),80)};
